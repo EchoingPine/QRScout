@@ -191,7 +191,7 @@
           "required": true,
           "code": "climbauto",
           "formResetBehavior": "reset",
-          "defaultValue": "Nothing",
+          "defaultValue": "No Climb",
           "choices": {
             "No Climb": "No Climb",
             "Left": "Left",
@@ -216,7 +216,7 @@
           "formResetBehavior": "reset",
           "defaultValue": "",
           "choices": {
-            "Didn't shoot": "Didn't shoot",
+            "0.0": "Didn't shoot",
             "1.00": "100%",
             ".945": "90-99%",
             ".8": "70-90%",
@@ -308,7 +308,7 @@
           "formResetBehavior": "reset",
           "defaultValue": "",
           "choices": {
-            "Didn't shoot": "Didn't shoot",
+            "0.0": "Didn't shoot",
             "1.00": "100%",
             ".945": "90-99%",
             ".8": "70-90%",
@@ -404,6 +404,26 @@
           "defaultValue": false
         },
         {
+          "title": "Alliance Score Percentage",
+          "description": "What percentage of your alliance's fuel did this robot contribute?",
+          "type": "select",
+          "required": true,
+          "code": "AS%",
+          "formResetBehavior": "reset",
+          "defaultValue": "",
+          "choices": {
+            "1.00": "100%",
+            ".945": "90-99%",
+            ".8": "70-90%",
+            ".6": "50-70%",
+            ".5": "50%",
+            ".4": "30-50%",
+            ".2": "10-30%",
+            ".05": "1-10%",
+            "0.0": "0%"
+          }
+        },
+        {
           "title": "Comments!",
           "type": "text",
           "required": true,
@@ -411,7 +431,7 @@
           "formResetBehavior": "reset",
           "defaultValue": "",
           "min": 0,
-          "max": 300
+          "max": 800
         }
       ]
     }
