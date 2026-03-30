@@ -12,7 +12,7 @@ const updateSW = registerSW({
 
 		window.setInterval(() => {
 			registration.update();
-		}, 2 * 60 * 1000);
+		}, 60 * 60 * 1000);
 	},
 	onNeedRefresh() {
 		updateSW(true);
