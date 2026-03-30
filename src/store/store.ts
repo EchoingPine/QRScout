@@ -79,22 +79,7 @@ export const useQRScoutState = createStore<QRScoutState>(
   initialState,
   'qrScout',
   {
-    version: 3,
-    partialize: state => ({
-      formData: initialState.formData,
-      fieldValues: initialState.fieldValues,
-      showQR: state.showQR,
-      matchData: state.matchData,
-    }),
-    migrate: persistedState => {
-      const state = (persistedState ?? {}) as Partial<QRScoutState>;
-
-      return {
-        ...initialState,
-        showQR: state.showQR ?? initialState.showQR,
-        matchData: state.matchData,
-      };
-    },
+    version: 2,
   },
 );
 
