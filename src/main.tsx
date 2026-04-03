@@ -15,7 +15,13 @@ const updateSW = registerSW({
 		}, 60 * 60 * 1000);
 	},
 	onNeedRefresh() {
-		updateSW(true);
+		const shouldUpdate = window.confirm(
+			'A new version of QR Scout is available. Update now?',
+		);
+
+		if (shouldUpdate) {
+			updateSW(true);
+		}
 	},
 });
 
