@@ -1,6 +1,8 @@
 import { useQRScoutState } from '@/store/store';
-import { Heart } from 'lucide-react';
+import { Button } from './ui/button';
+import { Heart, RefreshCw } from 'lucide-react';
 import { Logo } from './Logo';
+import { checkForUpdate } from '@/util/update';
 
 export function Footer() {
   const teamNumber = useQRScoutState(state => state.formData.teamNumber);
@@ -10,6 +12,17 @@ export function Footer() {
         <div className="h-32 w-full max-w-lg">
           <Logo />
         </div>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => {
+			void checkForUpdate();
+		  }}
+        >
+          <RefreshCw />
+          Check for update
+        </Button>
         {teamNumber !== 2713 && (
           <>
             <Heart className="text-primary size-8 fill-primary" />
