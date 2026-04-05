@@ -327,21 +327,6 @@
       "color": "#2a8525",
       "fields": [
         {
-          "title": "Climb",
-          "type": "select",
-          "required": true,
-          "code": "endPos",
-          "formResetBehavior": "reset",
-          "defaultValue": "No Climb",
-          "choices": {
-            "No Climb": "No Climb",
-            "Failed Climb": "Failed Climb",
-            "L1": "L1 Climb",
-            "L2": "L2 Climb",
-            "L3": "L3 Climb"
-          }
-        },
-        {
           "title": "Crossed Trench?",
           "type": "boolean",
           "required": false,
