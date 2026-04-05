@@ -12,8 +12,18 @@ const updateSW = registerSW({
 			return;
 		}
 
-		setUpdateChecker(() => {
-			return registration.update().then(() => Boolean(registration.waiting));
+		setUpdateChecker(async () => {
+			const previousWaiting = registration.waiting;
+
+			await registration.update();
+
+			await new Promise(resolve => setTimeout(resolve, 100));
+
+			if (registration.waiting && registration.waiting !== previousWaiting) {
+				return true;
+			}
+			
+			return false;
 		});
 
 		window.setInterval(() => {

@@ -14,5 +14,7 @@ export async function checkForUpdate() {
 
 	if (!hasUpdate) {
 		window.alert('No update available.');
+	} else {
+        
 	}
 }
