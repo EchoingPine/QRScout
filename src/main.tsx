@@ -4,6 +4,9 @@ import { App } from './app.tsx';
 import './index.css';
 import { setUpdateChecker } from './util/update';
 
+let hasPendingUpdate = false;
+let manualCheckResolver: ((value: boolean) => void) | null = null;
+
 const updateSW = registerSW({
 	immediate: true,
 	onRegisteredSW(_swUrl: string, registration?: ServiceWorkerRegistration) {
@@ -13,17 +16,26 @@ const updateSW = registerSW({
 		}
 
 		setUpdateChecker(async () => {
-			const previousWaiting = registration.waiting;
+			if (hasPendingUpdate || Boolean(registration.waiting)) {
+				return true;
+			}
 
 			await registration.update();
 
-			await new Promise(resolve => setTimeout(resolve, 100));
-
-			if (registration.waiting && registration.waiting !== previousWaiting) {
+			if (hasPendingUpdate || Boolean(registration.waiting)) {
 				return true;
 			}
-			
-			return false;
+
+			return await new Promise(resolve => {
+				manualCheckResolver = resolve;
+				window.setTimeout(() => {
+					if (manualCheckResolver === resolve) {
+						manualCheckResolver = null;
+					}
+
+					resolve(hasPendingUpdate || Boolean(registration.waiting));
+				}, 1500);
+			});
 		});
 
 		window.setInterval(() => {
@@ -31,6 +43,13 @@ const updateSW = registerSW({
 		}, 2 * 60 * 1000);
 	},
 	onNeedRefresh() {
+		hasPendingUpdate = true;
+
+		if (manualCheckResolver) {
+			manualCheckResolver(true);
+			manualCheckResolver = null;
+		}
+
 		const shouldUpdate = window.confirm(
 			'A new version of QR Scout is available. Update now?',
 		);
