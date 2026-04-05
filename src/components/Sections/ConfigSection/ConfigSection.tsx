@@ -9,8 +9,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { setConfig, useQRScoutState } from '@/store/store';
-import { Copy, Edit2 } from 'lucide-react';
+import { setConfig, useQRScoutState, loadConfig1, loadMainConfig } from '@/store/store';
+import { Copy, Edit2, RotateCcw } from 'lucide-react';
 import { useState } from 'react';
 import { Section } from '../../core/Section';
 import { ThemeSelector } from './ThemeSelector';
@@ -55,6 +55,7 @@ export function ConfigSection() {
   const [showEditor, setShowEditor] = useState(false);
   const formData = useQRScoutState(state => state.formData);
   const [error, setError] = useState<string | null>(null);
+  const [activeConfig, setActiveConfig] = useState<'config' | 'config1'>('config');
 
   return (
     <Section>
@@ -80,6 +81,25 @@ export function ConfigSection() {
           onError={setError}
           className="text-xs sm:text-sm w-full max-w-[200px]"
         />
+        
+        <Button
+          variant="secondary"
+          onClick={async () => {
+            const result = activeConfig === 'config' ? await loadConfig1() : await loadMainConfig();
+            if (!result.success) {
+              setError(result.error.message);
+            } else {
+              setActiveConfig(activeConfig === 'config' ? 'config1' : 'config');
+              setError(null);
+            }
+          }}
+          className="text-xs sm:text-sm w-full max-w-[200px]"
+        >
+          <RotateCcw className="h-5 w-5 flex-shrink-0" />
+          <span className="overflow-hidden text-ellipsis">
+            {activeConfig === 'config' ? 'Switch to Config 1' : 'Switch to Config'}
+          </span>
+        </Button>
         
         <Sheet open={showEditor} onOpenChange={setShowEditor}>
           <SheetTrigger asChild>

@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import { cloneDeep } from 'lodash';
 import configJson from '../../config/2026/config.json';
+import config1Json from '../../config/2026/config1.json';
 import {
   ActionTrackerInputData,
   Config,
@@ -175,4 +176,22 @@ export function inputSelector<T extends InputBase>(
 
 export function setMatchData(matchData: MatchData[]) {
   useQRScoutState.setState({ matchData });
+}
+
+export async function loadConfig1(): Promise<Result<void>> {
+	try {
+		const configText = JSON.stringify(config1Json, null, 2);
+		return setConfig(configText);
+	} catch (error) {
+		return { success: false, error: error as Error };
+	}
+}
+
+export async function loadMainConfig(): Promise<Result<void>> {
+	try {
+		const configText = JSON.stringify(configJson, null, 2);
+		return setConfig(configText);
+	} catch (error) {
+		return { success: false, error: error as Error };
+	}
 }
